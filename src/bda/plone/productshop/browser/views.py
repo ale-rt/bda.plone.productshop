@@ -41,7 +41,11 @@ def query_children(context, criteria=dict()):
 
 
 def img_scale(context, scale_name):
-    if not context.image:
+    try:
+        image = context.image
+    except AttributeError:
+        image = None
+    if not image:
         return None
     scales = context.restrictedTraverse("@@images")
     return scales.scale("image", scale_name)
